@@ -1,0 +1,7 @@
+pydantic
+typing
+fastapi[standard]
+uvicorn
+sqlalchemy
+psycopg2
+passlib[bcrypt]
