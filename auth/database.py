@@ -1,24 +1,15 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-from dotenv import load_dotenv
-import os
+__SQLALCHEMY_DATABASE_URL = "sqlite:///./instance/database.db"
 
-load_dotenv()
+__engine = create_engine(__SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 
-user = os.environ.get("DATABASE_USERNAME")
-password = os.environ.get("DATABASE_PASSWORD")
-host = os.environ.get("DATABASE_HOST")
-port = os.environ.get("DATABASE_PORT")
-database = os.environ.get("DATABASE_NAME")
-
-SQLALCHEMY_DATABASE_URL = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=__engine)
 
 Base = declarative_base()
+
+engine = __engine
 
 def get_db():
     db = SessionLocal()
@@ -28,4 +19,4 @@ def get_db():
         db.close()
 
 def create_db_and_tables():
-    Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=__engine)

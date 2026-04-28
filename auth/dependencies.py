@@ -7,10 +7,10 @@ from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 import os
 
-from .utils import verify_password, get_password_hash, create_access_token
+from .utils import verify_password
 from .token_model import TokenData
 from models.user import User
-from .database import SessionLocal, engine, Base, get_db
+from .database import engine, Base, get_db
 
 load_dotenv()
 
